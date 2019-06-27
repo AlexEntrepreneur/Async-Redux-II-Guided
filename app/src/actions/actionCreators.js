@@ -22,10 +22,7 @@ export function getQuotes() {
   return (dispatch) => {
     dispatch({ type: GETTING_QUOTES });
 
-    const token = localStorage.getItem('token');
-    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
-
-    axios.get('http://localhost:5000/api/quotes', axiosConfig)
+    axios.get('http://localhost:5000/api/quotes')
       .then(res => {
         dispatch({ type: GET_QUOTES_SUCCESS, payload: res.data });
       })
@@ -41,10 +38,7 @@ export function addQuote(quote) {
   return (dispatch) => {
     dispatch({ type: ADDING_QUOTE });
 
-    const token = localStorage.getItem('token');
-    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
-
-    axios.post('http://localhost:5000/api/quotes', quote, axiosConfig)
+    axios.post('http://localhost:5000/api/quotes', quote)
       .then(res => {
         dispatch({ type: ADD_QUOTE_SUCCESS, payload: res.data });
       })
@@ -60,10 +54,7 @@ export function deleteQuote(id) {
   return (dispatch) => {
     dispatch({ type: DELETING_QUOTE });
 
-    const token = localStorage.getItem('token');
-    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
-
-    axios.delete(`http://localhost:5000/api/quotes/${id}`, axiosConfig)
+    axios.delete(`http://localhost:5000/api/quotes/${id}`)
       .then(res => {
         dispatch({ type: DELETE_QUOTE_SUCCESS, payload: res.data });
       })
@@ -79,10 +70,7 @@ export function markFavourite(id, quote) {
   return (dispatch) => {
     dispatch({ type: MARKING_FAVOURITE });
 
-    const token = localStorage.getItem('token');
-    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
-
-    axios.put(`http://localhost:5000/api/quotes/${id}`, quote, axiosConfig)
+    axios.put(`http://localhost:5000/api/quotes/${id}`, quote)
       .then(res => {
         dispatch({ type: MARK_FAVOURITE_SUCCESS, payload: res.data });
       })
@@ -94,20 +82,8 @@ export function markFavourite(id, quote) {
   }
 }
 
-export function login(userLogin) {
-  return (dispatch) => {
-    dispatch({ type: LOGGING_IN });
-    return axios.post(`http://localhost:5000/api/login`, userLogin)
-      .then(res => {
-        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-        localStorage.setItem('token', res.data.token);
-      })
-      .catch(err => {
-        const error = err.response.data.message;
-        dispatch({ type: LOGIN_FAILURE, payload: error });
-        console.error(error);
-      });
-  }
+export function login() {
+  // Implement login Action Creator
 }
 
 export function makeQuoteOfTheDay(id) {
