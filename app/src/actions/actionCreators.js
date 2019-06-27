@@ -82,8 +82,19 @@ export function markFavourite(id, quote) {
   }
 }
 
-export function login() {
-  // Implement login Action Creator
+export function login(credentials) {
+  return (dispatch) => {
+    dispatch({ type: LOGGING_IN });
+
+    axios.post('http://localhost:5000/api/login', credentials)
+      .then(res => {
+        localStorage.setItem('token', res.data.token);
+        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: LOGIN_FAILURE });
+      });
+  }
 }
 
 export function makeQuoteOfTheDay(id) {

@@ -15,8 +15,7 @@ function LoginView(props) {
 
     usernameInput.value
       && passwordInput.value
-      && props.login(credentials)
-      .then(() => props.history.push('/'));
+      && props.login(credentials);
   }
   
   return (
