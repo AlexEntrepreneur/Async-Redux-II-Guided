@@ -22,7 +22,7 @@ class App extends React.Component {
           this.props.requestPending
           && <h2>Loading...</h2>
         } */}
-        <RestrictedRoute exact path="/" component={QuotesView} />
+        <Route exact path="/" component={QuotesView} />
         <Route path="/login" component={LoginView} />
       </div>
     );
