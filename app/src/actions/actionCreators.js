@@ -22,7 +22,10 @@ export function getQuotes() {
   return (dispatch) => {
     dispatch({ type: GETTING_QUOTES });
 
-    axios.get('http://localhost:5000/api/quotes')
+    const token = localStorage.getItem('token');
+    const axiosConfig = token ? { headers: { 'Authorization': token }}: null;
+
+    axios.get('http://localhost:5000/api/quotes', axiosConfig)
       .then(res => {
         dispatch({ type: GET_QUOTES_SUCCESS, payload: res.data });
       })
@@ -38,7 +41,10 @@ export function addQuote(quote) {
   return (dispatch) => {
     dispatch({ type: ADDING_QUOTE });
 
-    axios.post('http://localhost:5000/api/quotes', quote)
+    const token = localStorage.getItem('token');
+    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
+
+    axios.post('http://localhost:5000/api/quotes', quote, axiosConfig)
       .then(res => {
         dispatch({ type: ADD_QUOTE_SUCCESS, payload: res.data });
       })
@@ -54,7 +60,10 @@ export function deleteQuote(id) {
   return (dispatch) => {
     dispatch({ type: DELETING_QUOTE });
 
-    axios.delete(`http://localhost:5000/api/quotes/${id}`)
+    const token = localStorage.getItem('token');
+    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
+
+    axios.delete(`http://localhost:5000/api/quotes/${id}`, axiosConfig)
       .then(res => {
         dispatch({ type: DELETE_QUOTE_SUCCESS, payload: res.data });
       })
@@ -70,7 +79,10 @@ export function markFavourite(id, quote) {
   return (dispatch) => {
     dispatch({ type: MARKING_FAVOURITE });
 
-    axios.put(`http://localhost:5000/api/quotes/${id}`, quote)
+    const token = localStorage.getItem('token');
+    const axiosConfig = token ? { headers: { 'Authorization': token } } : null;
+
+    axios.put(`http://localhost:5000/api/quotes/${id}`, quote, axiosConfig)
       .then(res => {
         dispatch({ type: MARK_FAVOURITE_SUCCESS, payload: res.data });
       })
@@ -92,7 +104,9 @@ export function login(credentials) {
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       })
       .catch(err => {
-        dispatch({ type: LOGIN_FAILURE });
+        const error = err.response.data.message;
+        dispatch({ type: LOGIN_FAILURE, payload: error });
+        console.error(error);
       });
   }
 }
