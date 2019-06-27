@@ -10,6 +10,6 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "node --inspect server"
+    "start": "nodemon --inspect server"
   }
 }
