@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import RestrictedRoute from './HOCs/RestrictedRoute';
 import { connect } from 'react-redux';
 import QuotesView from './views/QuotesView';
 import LoginView from './views/LoginView';
@@ -21,7 +22,7 @@ class App extends React.Component {
           this.props.requestPending
           && <h2>Loading...</h2>
         } */}
-        <Route exact path="/" component={QuotesView} />
+        <RestrictedRoute exact path="/" component={QuotesView} />
         <Route path="/login" component={LoginView} />
       </div>
     );
